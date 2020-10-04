@@ -180,7 +180,6 @@
 #ifndef _PORT_H_
 #define _PORT_H_
 
-#include <stdio.h>
 #ifndef _MSC_VER
 #include <stdbool.h>
 #endif
@@ -224,11 +223,6 @@ typedef uint64_t		uint64;
 
 #ifndef _MAX_PATH
 #define _MAX_PATH	PATH_MAX
-#endif
-
-#ifndef _MSC_VER
-void _splitpath (const char * path, char * drive, char * dir, char * fname, char * ext);
-void _makepath (char * path, const char * a, const char * dir, const char * fname, const char * ext);
 #endif
 
 #ifdef __DJGPP

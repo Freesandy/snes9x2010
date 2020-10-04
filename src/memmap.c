@@ -175,6 +175,7 @@
   Super NES and Super Nintendo Entertainment System are trademarks of
   Nintendo Co., Limited and its subsidiary companies.
  ***********************************************************************************/
+#include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
@@ -257,6 +258,66 @@ static const uint32	crc32Table[256] =
 	0x54de5729, 0x23d967bf, 0xb3667a2e, 0xc4614ab8, 0x5d681b02, 0x2a6f2b94,
 	0xb40bbe37, 0xc30c8ea1, 0x5a05df1b, 0x2d02ef8d
 };
+
+/* S9x weirdness. */
+static void split_path(const char * path, char * drive, char * dir, char * fname, char * ext)
+{
+   char *slash = strrchr((char*)path, SLASH_CHAR);
+   char *dot   = strrchr((char*)path, '.');
+
+   if (dot && slash && dot < slash)
+      dot = NULL;
+
+   if (!slash)
+   {
+      *dir = 0;
+
+      strcpy(fname, path);
+
+      if (dot)
+      {
+         fname[dot - path] = 0;
+         strcpy(ext, dot + 1);
+      }
+      else
+         *ext = 0;
+   }
+   else
+   {
+      strcpy(dir, path);
+      dir[slash - path] = 0;
+
+      strcpy(fname, slash + 1);
+
+      if (dot)
+      {
+         fname[dot - slash - 1] = 0;
+         strcpy(ext, dot + 1);
+      }
+      else
+         *ext = 0;
+   }
+}
+
+static void make_path(char *path, const char *a,
+      const char *dir, const char *fname, const char *ext)
+{
+   if (dir && *dir)
+   {
+      strcpy(path, dir);
+      strcat(path, SLASH_STR);
+   }
+   else
+      *path = 0;
+
+   strcat(path, fname);
+
+   if (ext && *ext)
+   {
+      strcat(path, ".");
+      strcat(path, ext);
+   }
+}
 
 /* deinterleave*/
 
@@ -774,10 +835,10 @@ static uint32 FileLoader (uint8 *buffer, const char *filename, int32 maxsize)
 
 	Memory.HeaderCount = 0;
 
-	_splitpath(filename, drive, dir, name, exts);
-	_makepath(fname, drive, dir, name, exts);
+	split_path(filename, drive, dir, name, exts);
+	make_path(fname, drive, dir, name, exts);
 
-	fp = OPEN_STREAM(fname, "rb");
+	fp = OPEN_STREAM(fname);
 	if (!fp)
 		return (0);
 
@@ -803,7 +864,7 @@ static uint32 FileLoader (uint8 *buffer, const char *filename, int32 maxsize)
 		{
 			more = TRUE;
 			ext[0]++;
-			_makepath(fname, drive, dir, name, exts);
+			make_path(fname, drive, dir, name, exts);
 		}
 		else
 			if (ptr - buffer < maxsize + 0x200 &&
@@ -814,12 +875,12 @@ static uint32 FileLoader (uint8 *buffer, const char *filename, int32 maxsize)
 			{
 				more = TRUE;
 				name[len - 1]++;
-				_makepath(fname, drive, dir, name, exts);
+				make_path(fname, drive, dir, name, exts);
 			}
 			else
 				more = FALSE;
 
-	}	while (more && (fp = OPEN_STREAM(fname, "rb")) != NULL);
+	}	while (more && (fp = OPEN_STREAM(fname)) != NULL);
 
 	if (Memory.HeaderCount == 0)
 		S9xMessage(S9X_MSG_INFO, S9X_CATEGORY_ROM, "No ROM file header found.");
