@@ -1721,8 +1721,7 @@ static uint8 prev_screen = 0;
 #define REPORT_SCREEN() \
 if(prev_screen != PPU.BGMode) \
 { \
-	fprintf(stderr, "MODE: #%d.\n", PPU.BGMode); \
-	prev_screen = PPU.BGMode; \
+   prev_screen = PPU.BGMode; \
 }
 #else
 #define REPORT_SCREEN()
@@ -3018,9 +3017,10 @@ static void S9xSetSuperFX (uint8 byte, uint16 address)
 	}
 }
 
-#define REGISTER_2180(Byte) \
+#define REGISTER_2180(Byte) do { \
 	Memory.RAM[PPU.WRAM++] = Byte; \
-	PPU.WRAM &= 0x1ffff;
+	PPU.WRAM &= 0x1ffff; \
+} while (0)
 
 bool8 coldata_update_screen = TRUE;
 
