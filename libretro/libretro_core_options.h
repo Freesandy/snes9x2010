@@ -36,13 +36,13 @@ struct retro_core_option_definition option_defs_us[] = {
 	 * Adding more variables and rearranging them is safe. */
    {
       "snes9x_2010_overclock",
-      "SuperFX Overclock",
-      "Overclock or underclock the SuperFX chip. This may improve the framerate and playability of games that use SuperFX.",
+      "SuperFX超频",
+      "对SuperFX芯片进行超频或降频, 这可以提高使用SuperFX的游戏的帧速率和可玩性.",
       {
-         { "5 MHz (Underclock)", NULL },
-         { "8 MHz (Underclock)", NULL },
-         { "9 MHz (Underclock)", NULL },
-         { "10 MHz (Default)",  NULL },
+         { "5 MHz (Underclock)", "5 MHz (降频)" },
+         { "8 MHz (Underclock)", "8 MHz (降频)" },
+         { "9 MHz (Underclock)", "9 MHz (降频)" },
+         { "10 MHz (Default)",  "10 MHz (缺省)" },
          { "11 MHz", NULL },
          { "12 MHz", NULL },
          { "13 MHz", NULL },
@@ -57,34 +57,34 @@ struct retro_core_option_definition option_defs_us[] = {
    },
    {
       "snes9x_2010_overclock_cycles",
-      "Reduce Slowdown (Hack, Unsafe)",
-      "Overclock SNES CPU. May cause games to crash! Use 'Light' for shorter loading times, 'Compatible' for most games exhibiting slowdown and 'Max' only if absolutely required (Gradius 3, Super R-type...).",
+      "减少拖慢(修改, 不安全)",
+      "超频SFC CPU. 可能导致游戏崩溃! 仅在绝对需要时才使用'轻度'来缩短加载时间, 对大多数表现出减速的游戏使用'兼容', 并且仅在绝对需要时才使用'最大' (宇宙巡航舰3, 超级异型战机R型等).",
       {
-         { "disabled",   NULL },
-         { "light",      "Light" },
-         { "compatible", "Compatible" },
-         { "max",        "Max" },
+         { "disabled",   "禁用" },
+         { "light",      "轻度" },
+         { "compatible", "兼容" },
+         { "max",        "最大" },
          { NULL, NULL},
       },
       "disabled"
    },
    {
       "snes9x_2010_reduce_sprite_flicker",
-      "Reduce Flickering (Hack, Unsafe)",
-      "Increases number of sprites that can be drawn simultaneously on screen.",
+      "减少闪烁(修改, 不安全)",
+      "增加可以在屏幕上同时绘制的活动块数量.",
       {
-         { "disabled", NULL },
-         { "enabled",  NULL },
+         { "disabled", "禁用" },
+         { "enabled",  "启用" },
          { NULL, NULL},
       },
       "disabled"
    },
    {
       "snes9x_2010_region",
-      "Console Region (Restart)",
-      "Specify which region the system is from. 'PAL' is 50hz, 'NTSC' is 60hz. Games will run faster or slower than normal if the incorrect region is selected.",
+      "主机区域(需重新启动)",
+      "指定系统来自哪个区域. 'PAL'为50hz,'NTSC'为60hz. 如果选择了不正确的区域,游戏将比正常运行更快或更慢.",
       {
-         { "auto", "Auto" },
+         { "auto", "自动" },
          { "ntsc", "NTSC" },
          { "pal",  "PAL" },
          { NULL, NULL},
@@ -93,12 +93,12 @@ struct retro_core_option_definition option_defs_us[] = {
    },
    {
       "snes9x_2010_aspect",
-      "Preferred Aspect Ratio",
-      "Choose the preferred content aspect ratio. This will only apply when RetroArch's aspect ratio is set to 'Core provided' in the Video settings.",
+      "首选宽高比",
+      "选择首选的内容宽高比. 仅当在视频设置中将RetroArch的长宽比设置为'核心提供'时, 此选项才适用.",
       {
          { "4:3",         NULL },
-         { "uncorrected", "Uncorrected" },
-         { "auto",        "Auto" },
+         { "uncorrected", "不校正" },
+         { "auto",        "自动" },
          { "ntsc",        "NTSC" },
          { "pal",         "PAL" },
          { NULL, NULL},
@@ -107,25 +107,25 @@ struct retro_core_option_definition option_defs_us[] = {
    },
    {
       "snes9x_2010_turbodelay",
-      "Set Autofire Pulse",
-      "Fire interval: medium - 6 frames, fast - 4 frames, slow - 8 frames.",
+      "设置连发脉冲",
+      "连发间隔: 中度-6帧, 快速-4帧, 慢速-8帧.",
       {
-         { "medium", "Medium" },
-         { "fast", "Fast" },
-         { "slow", "Slow "},
+         { "medium", "中度" },
+         { "fast", "快速" },
+         { "slow", "慢速"},
          { NULL, NULL },
       },
       "medium"
    },
    {
       "snes9x_2010_blargg",
-      "Blargg NTSC Filter",
-      "Apply a video filter to mimic various NTSC TV signals.",
+      "Blargg NTSC滤镜",
+      "应用视频滤镜模仿各种NTSC电视信号.",
       {
          { "disabled",   NULL },
-         { "monochrome", "Monochrome" },
+         { "monochrome", "黑白电视" },
          { "rf",         "RF" },
-         { "composite",  "Composite" },
+         { "composite",  "复合视频" },
          { "s-video",    "S-Video" },
          { "rgb",        "RGB" },
          { NULL, NULL},
@@ -134,14 +134,14 @@ struct retro_core_option_definition option_defs_us[] = {
    },
    {
       "snes9x_2010_block_invalid_vram_access",
-      "Block Invalid VRAM Access (Restart)",
-      "Some homebrew/ROM hacks require this option to be disabled for correct operation.",
+      "阻止无效的VRAM访问(需要重新启动)",
+      "一些自制软件/改版游戏要求禁用此选项正确显示画面.",
       {
-         { "enabled",  NULL },
-         { "disabled", NULL },
+         { "enabled",  "启用" },
+         { "disabled", "禁用" },
          { NULL, NULL},
       },
-      "enabled"
+      "disabled"
    },
 
    { NULL, NULL, NULL, {{0}}, NULL },
